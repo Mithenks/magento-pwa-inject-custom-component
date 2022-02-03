@@ -16,7 +16,21 @@
  * with many customizations, this function would tap those targets and add
  * or modify functionality from its dependencies.
  */
+const { Targetables } = require("@magento/pwa-buildpack");
 
-function localIntercept() {}
+function localIntercept(targets) {
+    const targetables = Targetables.using(targets);
+
+    const MainComponent = targetables.reactComponent(
+        "@magento/venia-ui/lib/components/Main/main.js"
+    );
+
+    // Add an import statement for our custom component
+    const Announce = MainComponent.addImport(
+        "Announce from '" + require.resolve("./src/components/announce") + "'"
+    );
+
+    MainComponent.prependJSX("div className={pageClass}", `<${Announce} message="My big announcement"/>`);
+}
 
 module.exports = localIntercept;

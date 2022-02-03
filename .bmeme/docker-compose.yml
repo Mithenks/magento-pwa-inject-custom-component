@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  app:
+    build: 
+      context: docker/
+    entrypoint: /fix-perm.sh /bin/sleep infinity
+    working_dir: /usr/src/app/
+    env_file:
+      - ../.env.local
+    volumes:
+      - "../app:/usr/src/app:cached"
+    ports:
+      - "${PROJECT_PORT}:${PROJECT_PORT}"
+    environment:
+      - DNSDOCK_ALIAS=${PROJECT_NAME}.${PROJECT_VENDOR}.docker
+      - VIRTUAL_HOST=${PROJECT_NAME}.${PROJECT_VENDOR}.docker
+      - VIRTUAL_PORT=${PROJECT_PORT}

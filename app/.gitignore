@@ -6,7 +6,7 @@ storybook-dist
 test-results
 dist
 .DS_Store
-.env
+#.env
 build-stats.json
 npm-debug.log
 merged-schema*.json
